@@ -1,0 +1,18 @@
+A vals
+5
+0x7f940dd00000->5
+using copy constructor
+B vals
+5
+0x7f940dd00010->5
+C vals
+10
+0x7f940dd00020->10
+D vals
+15
+0x7f940dd00030->15
+finished
+Deleting ptr: 0x7f940dd00030
+Deleting ptr: 0x7f940dd00020
+Deleting ptr: 0x7f940dd00010
+Deleting ptr: 0x7f940dd00000
