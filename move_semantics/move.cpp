@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 
 class Obj {
 public:
@@ -30,9 +31,11 @@ public:
 
 // Destructor
  ~Obj() {
-    std::cout << "Deleting ptr: " << this->ptr << std::endl;
-    delete ptr;
-    ptr = nullptr;
+    std::cout << "Deleting ptr: " << this->ptr << " for " << this << std::endl;
+    if (ptr) {
+        delete ptr;
+        ptr = nullptr;
+    } 
  }
 
 // +
@@ -52,25 +55,32 @@ int main(int argc, char** argv) {
     Obj A{};
     A.ptr = new int(5);
     A.someVal = 5;
-    std::cout << "A vals\n";
+    std::cout << "A vals (" << &A << ")\n";;
     std::cout << A.someVal << std::endl;
     std::cout << A.ptr << "->" << *(A.ptr) << std::endl;
 
     Obj B{A};
-    std::cout << "B vals\n";
+    std::cout << "B vals (" << &B << ")\n";;
     std::cout << B.someVal << std::endl;
     std::cout << B.ptr << "->" << *(B.ptr) << std::endl;
 
-    Obj C{A + B};
-    std::cout << "C vals\n";
+    Obj C{A + B}; // won't work -- copy ellision
+    std::cout << "C vals (" << &C << ")\n";;
     std::cout << C.someVal << std::endl;
     std::cout << C.ptr << "->" << *(C.ptr) << std::endl;
 
 
-    Obj D = C + A;
-    std::cout << "D vals\n";
+    Obj D = C + A; // won't work -- copy ellision
+    std::cout << "D vals (" << &D << ")\n";;
     std::cout << D.someVal << std::endl;
     std::cout << D.ptr << "->" << *(D.ptr) << std::endl;
+
+    // Dangerous, D can still be manipulated afterward
+    Obj E = std::move(D); // casts lvalue D into rvalue to use move constructor
+    std::cout << "E vals (" << &E << ")\n";;
+    std::cout << E.someVal << std::endl;
+    std::cout << E.ptr << "->" << *(E.ptr) << std::endl;
+    
 
     std::cout << "finished" << std::endl;
 }
