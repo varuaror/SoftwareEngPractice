@@ -4,7 +4,9 @@
 class Obj {
 public:
 
- Obj(){}
+ Obj(){
+    std::cout << "using default constructor\n";
+ } 
 
  // Copy
  Obj(const Obj& in) {
@@ -64,11 +66,15 @@ int main(int argc, char** argv) {
     std::cout << B.someVal << std::endl;
     std::cout << B.ptr << "->" << *(B.ptr) << std::endl;
 
+    Obj otherB = A;
+    std::cout << "otherB vals (" << &otherB << ")\n";;
+    std::cout << otherB.someVal << std::endl;
+    std::cout << otherB.ptr << "->" << *(otherB.ptr) << std::endl;
+
     Obj C{A + B}; // won't work -- copy ellision
     std::cout << "C vals (" << &C << ")\n";;
     std::cout << C.someVal << std::endl;
     std::cout << C.ptr << "->" << *(C.ptr) << std::endl;
-
 
     Obj D = C + A; // won't work -- copy ellision
     std::cout << "D vals (" << &D << ")\n";;
