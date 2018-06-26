@@ -36,6 +36,16 @@ int main(void) {
     std::cout << "executing lambda...\n";
     p();
 
+   bool ret = [y](int q) mutable -> bool {
+        y = q/4.0;
+        std::cout << y << std::endl;
+        return true;
+    }(42);
+    std::cout << y << std::endl;
+    if (ret) {
+        std::cout << "lol\n";
+    }
+
     /* non-mutable lambda error
     [=](){
         x = 13; //error
